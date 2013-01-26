@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!ELEMENT askList (ask*)>
+<!ELEMENT ask ( customer, account) >
+<!ELEMENT customer ( name, lastName, adress)>
+<!ELEMENT name (#PCDATA)>
+<!ELEMENT lastName (#PCDATA)>
+<!ELEMENT adress (#PCDATA)>
+<!ELEMENT account (check+)>
+<!ATTLIST account value CDATA #REQUIRED >
+<!ELEMENT check (currency, number)>
+<!ELEMENT currency (#PCDATA) >
+<!ELEMENT number (#PCDATA)>

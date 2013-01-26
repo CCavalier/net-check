@@ -1,12 +1,10 @@
 package fr.cavalier.netcheck.model;
 
-
+import java.util.HashMap;
 
 /**
  * @author C Cavalier
- * @date 26 janv. 2013
- * net-check
- * fr.cavalier.netcheck.model Customer.java 
+ * @date 26 janv. 2013 net-check fr.cavalier.netcheck.model Customer.java
  */
 public class Customer {
 
@@ -14,30 +12,55 @@ public class Customer {
 	private String lastname;
 	private String location;
 	private Account account;
+
+	/**
+	 * @param name
+	 * @param lastname
+	 * @param location
+	 */
+	public Customer(String name, String lastname, String location) {
+		super();
+		this.name = name;
+		this.lastname = lastname;
+		this.location = location;
+	}
+
+	public Customer() {
+
+	}
+
 	public String getName() {
 		return name;
 	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
+
 	public String getLastname() {
 		return lastname;
 	}
+
 	public void setLastname(String lastname) {
 		this.lastname = lastname;
 	}
+
 	public String getLocation() {
 		return location;
 	}
+
 	public void setLocation(String location) {
 		this.location = location;
 	}
+
 	public Account getAccount() {
 		return account;
 	}
+
 	public void setAccount(Account account) {
 		this.account = account;
 	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -50,6 +73,7 @@ public class Customer {
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -81,6 +105,8 @@ public class Customer {
 			return false;
 		return true;
 	}
-	
-	
+
+	public void askNewAccount(double montant, HashMap<String, Integer> checks) {
+		
+	}
 }
