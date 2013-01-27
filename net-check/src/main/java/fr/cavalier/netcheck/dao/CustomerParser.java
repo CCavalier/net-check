@@ -17,9 +17,23 @@ import fr.cavalier.netcheck.model.Customer;
  * fr.cavalier.netcheck.dao CustomerParser.java 
  */
 public class CustomerParser extends XmlParser {
+	
 	public CustomerParser(){
+		super();
 		super.input="accountAsk";
 		super.output="accountAsk";
+	}
+	
+	private void initializeFile() {
+		Node root = doc.getFirstChild();
+		if (root == null) {
+			root = doc.createElement("askList");
+			doc.appendChild(root);
+		} else if (!root.getNodeName().equals("askList")) {
+			doc.removeChild(root);
+			root = doc.createElement("askList");
+			doc.appendChild(root);
+		}
 	}
 	
 
@@ -30,6 +44,7 @@ public class CustomerParser extends XmlParser {
 	 * @param balance
 	 */
 	public void askNewAccount(Customer c, HashMap<String,Integer> cheque, double balance){
+		initializeFile();
 		NodeList nl = doc.getElementsByTagName("askList");
 		Node root = nl.item(0);
 		

@@ -1,5 +1,7 @@
 package fr.cavalier.netcheck.dao;
 
+import java.util.List;
+
 import org.w3c.dom.Node;
 
 import fr.cavalier.netcheck.model.Check;
@@ -16,7 +18,7 @@ public class PaymentParser extends XmlParser {
 	public PaymentParser(){
 		super.input="paymentAsk";
 		super.output="paymentAsk";
-		initializeFile();
+		super.gestionnaire = new PaymentHandler();
 	}
 	
 	private void initializeFile() {
@@ -32,6 +34,7 @@ public class PaymentParser extends XmlParser {
 	}
 	
 	public void addNewPaymentCheck(Check cheque) {
+		initializeFile();
 		Node root = doc.getFirstChild();
 		Node checkNode = doc.createElement("check");
 		
@@ -41,26 +44,22 @@ public class PaymentParser extends XmlParser {
 		Node currencyNode = doc.createElement("currency");
 		currencyNode.setTextContent(cheque.getCurrency());
 		checkNode.appendChild(currencyNode);
-		Node valueNode = doc.createElement("currency");
+		Node valueNode = doc.createElement("value");
 		valueNode.setTextContent(((Double)cheque.getValue()).toString());
 		checkNode.appendChild(valueNode);
-		Node dateNode = doc.createElement("currency");
+		Node dateNode = doc.createElement("date");
 		dateNode.setTextContent(DateFormatter.convertDateToString(cheque.getDate()));
 		checkNode.appendChild(dateNode);
 		Node accountOwnerNode = doc.createElement("accountOwner");
 		accountOwnerNode.setTextContent(cheque.getAccountOwner().toString());
 		checkNode.appendChild(accountOwnerNode);
 		
-		Node customerNode = doc.createElement("customer");
-		Node customerNameNode = doc.createElement("name");
-		customerNameNode.setTextContent(cheque.getUser().getName());
-		customerNode.appendChild(customerNameNode);
-		Node customerLastnameNode = doc.createElement("name");
-		customerLastnameNode.setTextContent(cheque.getUser().getLastname());
-		customerNode.appendChild(customerLastnameNode);
-		checkNode.appendChild(customerNode);
-		
 		root.appendChild(checkNode);
+	}
+	
+	public List<Check> initSaxAndGetCheckList() {
+		this.saxInit();
+		return ((PaymentHandler)super.gestionnaire).getReceivedChecks();
 	}
 
 }
