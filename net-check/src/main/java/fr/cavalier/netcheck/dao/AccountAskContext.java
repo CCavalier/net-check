@@ -14,14 +14,14 @@ import fr.cavalier.netcheck.util.CheckIdGenerator;
  * net-check
  * fr.cavalier.netcheck.dao ManagerParserContext.java 
  */
-public class ManagerParserContext {
+public class AccountAskContext {
 	
 	private List<Customer> customerList;
 	private Customer currentCustomer;
 	private Account currentAccount;
 	private Check currentCheck;
 	
-	public ManagerParserContext() {
+	public AccountAskContext() {
 		customerList = new ArrayList<Customer>();
 	}
 
@@ -113,7 +113,7 @@ public class ManagerParserContext {
 		for (int i=0; i<value; i++) {
 			cheque = (Check) getCurrentCheck().clone();
 			cheque.setId(CheckIdGenerator.getNextId());
-			getCurrentAccount().getCheques().add(cheque);
+			getCurrentAccount().getAvailableCheques().add(cheque);
 		}
 	}
 	
@@ -132,7 +132,7 @@ public class ManagerParserContext {
 	public List<Check> getAllChecks() {
 		List<Check> result = new ArrayList<Check>();
 		for (Customer customer : getCustomerList()) {
-			result.addAll(customer.getAccount().getCheques());
+			result.addAll(customer.getAccount().getAvailableCheques());
 		}
 		return result;
 	}

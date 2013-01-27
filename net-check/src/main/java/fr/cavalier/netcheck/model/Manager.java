@@ -13,9 +13,11 @@ public class Manager {
 
 	private Long identifiant;
 	private List<Customer> users;
+	private List<Enterprise> enterprises;
 	
 	public Manager(){
 		users=new ArrayList<Customer>();
+		enterprises = new ArrayList<Enterprise>();
 	}
 	
 	/**
@@ -30,6 +32,15 @@ public class Manager {
 	public void setUsers(List<Customer> users) {
 		this.users = users;
 	}
+	
+	public List<Enterprise> getEnterprises() {
+		return enterprises;
+	}
+
+	public void setEnterprises(List<Enterprise> enterprises) {
+		this.enterprises = enterprises;
+	}
+	
 	public Long getIdentifiant() {
 		return identifiant;
 	}
@@ -46,7 +57,7 @@ public class Manager {
 				Customer existingCustomer = getUsers().get(getUsers().indexOf(customer));
 				Account existingAccount = existingCustomer.getAccount();
 				existingAccount.setBalance(existingAccount.getBalance() + customer.getAccount().getBalance());
-				existingAccount.getCheques().addAll(customer.getAccount().getCheques());
+				existingAccount.getAvailableCheques().addAll(customer.getAccount().getAvailableCheques());
 			}
 		}
 	}

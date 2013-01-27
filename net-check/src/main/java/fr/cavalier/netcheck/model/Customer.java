@@ -116,4 +116,11 @@ public class Customer {
 	public String toString() {
 		return this.getName() + " - " + this.getLastname();
 	}
+	
+	public Check paiement(String currency, double value) {
+		if (getAccount().isAbleToPay(currency, value)) {
+			return getAccount().writeCheck(currency, value);
+		}
+		return null;
+	}
 }

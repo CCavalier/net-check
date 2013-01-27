@@ -15,14 +15,14 @@ import fr.cavalier.netcheck.model.Manager;
  * fr.cavalier.netcheck.dao 
  * ManagerHandler.java
  */
-public class ManagerHandler extends DefaultHandler {
+public class AccountAskHandler extends DefaultHandler {
 
 	private Manager manager;
-	private ManagerParserContext context;
+	private AccountAskContext context;
 	private String currentTag;
 
-	public ManagerHandler(Manager manager) {
-		this.context = new ManagerParserContext();
+	public AccountAskHandler(Manager manager) {
+		this.context = new AccountAskContext();
 		this.manager = manager;
 	}
 	
@@ -47,6 +47,7 @@ public class ManagerHandler extends DefaultHandler {
 			context.addAccount(account);
 		} else if(qName.equals("check")){
 			Check cheque=new Check();
+			cheque.setAccountOwner(getManager().getIdentifiant());
 			context.addCheck(cheque);
 		}
 	}
@@ -115,11 +116,11 @@ public class ManagerHandler extends DefaultHandler {
 		getManager().insertAsks(context.getCustomerList());
 	}
 
-	public ManagerParserContext getContext() {
+	public AccountAskContext getContext() {
 		return context;
 	}
 
-	public void setContext(ManagerParserContext context) {
+	public void setContext(AccountAskContext context) {
 		this.context = context;
 	}
 

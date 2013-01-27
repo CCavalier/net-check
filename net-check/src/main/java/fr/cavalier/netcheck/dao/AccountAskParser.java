@@ -10,19 +10,24 @@ import fr.cavalier.netcheck.model.Manager;
 
 
 /**
+ * <p>Parser pour la transformation des demandes de comptes en comptes clients</p>
  * @author malika 
  * @date 26 janv. 2013
  * net-check
  * fr.cavalier.netcheck.dao ManagerParser.java 
  */
-public class ManagerParser extends XmlParser {
+public class AccountAskParser extends XmlParser {
 
-	public ManagerParser(Manager manager){
+	public AccountAskParser(Manager manager){
 		super.input="accountAsk";
 		super.output="accountAsk";
-		super.gestionnaire =new ManagerHandler(manager);
+		super.gestionnaire =new AccountAskHandler(manager);
 	}
 	
+	/**
+	 * <p>Genere la liste de compte du manager</p>
+	 * @param manager
+	 */
 	public void createChecksList(Manager manager){
 		super.output="checkList";
 		Account compte;
@@ -46,7 +51,7 @@ public class ManagerParser extends XmlParser {
 			//compte
 			Element eCompte=doc.createElement("account");
 			eCompte.setAttribute("Solde", ((Double)compte.getBalance()).toString());
-			for(Check cheque:compte.getCheques()){
+			for(Check cheque:compte.getAvailableCheques()){
 				//cheque
 				Element id=doc.createElement("id");
 				Element eCheck=doc.createElement("check");
