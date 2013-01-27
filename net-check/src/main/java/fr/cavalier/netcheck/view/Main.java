@@ -2,10 +2,16 @@
 package fr.cavalier.netcheck.view;
 
 import java.util.HashMap;
+import java.util.List;
 
-import fr.cavalier.netcheck.dao.CustomerParser;
 import fr.cavalier.netcheck.dao.AccountAskParser;
+import fr.cavalier.netcheck.dao.CheckListParser;
+import fr.cavalier.netcheck.dao.CustomerParser;
+import fr.cavalier.netcheck.dao.ManagerParser;
+import fr.cavalier.netcheck.dao.PaymentParser;
+import fr.cavalier.netcheck.model.Check;
 import fr.cavalier.netcheck.model.Customer;
+import fr.cavalier.netcheck.model.Enterprise;
 import fr.cavalier.netcheck.model.Manager;
 
 /*
@@ -15,16 +21,17 @@ import javax.xml.parsers.*;
 public class Main {
 	
 	public static void registerCustomersAndAskChecks() {
-		Customer clientOne = new Customer("Toto", "Foo", "AZE@Perpi") ;
+		Customer clientOne = new Customer("Cavalier", "Charlotte", "charlotte.cavalier@perpignan.com") ;
 		HashMap<String,Integer> chequesDemandes= new HashMap<String,Integer>();
-		chequesDemandes.put("EUR", 2);
+		chequesDemandes.put("EUR", 10);
 		chequesDemandes.put("USD", 3);
 		
 		
-		Customer clientTwo = new Customer("Titi", "uzaeiuyazue", "AZE@Perpi") ;
+		Customer clientTwo = new Customer("Teychene", "Francois", "fte@usap.com") ;
 		HashMap<String,Integer> chequesDemandes2= new HashMap<String,Integer>();
-		chequesDemandes2.put("HKD", 2);
-		chequesDemandes2.put("CAD", 3);
+		chequesDemandes2.put("EUR", 10);
+		chequesDemandes2.put("JPY", 1);
+		
 		CustomerParser parser=new CustomerParser();
 		parser.parse();
 		parser.askNewAccount(clientOne, chequesDemandes, 200.);
@@ -36,11 +43,48 @@ public class Main {
 		Manager manager = new Manager();
 		manager.setIdentifiant(0L);
 		
-		AccountAskParser mp=new AccountAskParser(manager);
+		// Récupération des demades
+		AccountAskParser askp=new AccountAskParser(manager);
+		askp.parse();
+		askp.saxInit();
+		
+		CheckListParser chkp = new CheckListParser();
+		chkp.parse();
+		for (Customer customer : manager.getUsers()) {
+			chkp.recordCheckListForUser(customer);
+			chkp.transform();
+		}
+		
+		// Enregistrement de la listes de cheques par utilisateurs
+		ManagerParser mp = new ManagerParser();
 		mp.parse();
-		mp.saxInit();
-		mp.createChecksList(manager);
+		mp.recordManager(manager);
 		mp.transform();
+	}
+	
+	public static void retrieveCheckReplyAndTryToPay() {
+		Customer client = new Customer();
+		
+		CheckListParser parser = new CheckListParser("checkList.Cavalier-Charlotte", client);
+		parser.parse();
+		parser.saxInit();
+		
+		PaymentParser pp = new PaymentParser();
+		pp.parse();
+		pp.addNewPaymentCheck(client.paiement("EUR", 100.0));
+		pp.addNewPaymentCheck(client.paiement("EUR", 37.5));
+		pp.transform();
+	}
+	
+	public static void enterpriseReceiveChecksForPayment() {
+		Enterprise entreprise = new Enterprise();
+		entreprise.setName("USAP");
+		entreprise.setLocation("Perpignan");
+		
+		PaymentParser pp = new PaymentParser();
+		pp.parse();
+		List<Check> waitingCheck = pp.initSaxAndGetCheckList();
+		entreprise.setWaitingForTreatmentChecks(waitingCheck);
 	}
 
 	/**
@@ -50,6 +94,8 @@ public class Main {
 		// Part 1
 		registerCustomersAndAskChecks();
 		registerAskedChecksAndReply();
+		retrieveCheckReplyAndTryToPay();
+		enterpriseReceiveChecksForPayment();
 	}
 
 }
