@@ -65,11 +65,8 @@ public class Customer {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((account == null) ? 0 : account.hashCode());
 		result = prime * result
 				+ ((lastname == null) ? 0 : lastname.hashCode());
-		result = prime * result
-				+ ((location == null) ? 0 : location.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		return result;
 	}
@@ -83,7 +80,12 @@ public class Customer {
 		if (getClass() != obj.getClass())
 			return false;
 		Customer other = (Customer) obj;
-		if (account == null) {
+		if(!other.getName().equals(this.getName())){
+			return false;
+		}else if(!other.getLastname().equals(getLastname())){
+			return false;
+		}
+	/*	if (account == null) {
 			if (other.account != null)
 				return false;
 		} else if (!account.equals(other.account))
@@ -102,11 +104,16 @@ public class Customer {
 			if (other.name != null)
 				return false;
 		} else if (!name.equals(other.name))
-			return false;
+			return false;*/
 		return true;
 	}
 
 	public void askNewAccount(double montant, HashMap<String, Integer> checks) {
 		
+	}
+	
+	@Override
+	public String toString() {
+		return this.getName() + " - " + this.getLastname();
 	}
 }

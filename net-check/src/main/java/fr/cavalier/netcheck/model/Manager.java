@@ -1,5 +1,6 @@
 package fr.cavalier.netcheck.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -10,8 +11,13 @@ import java.util.List;
  */
 public class Manager {
 
+	private Long identifiant;
 	private List<Customer> users;
-	private List<Account> accounts;
+	
+	public Manager(){
+		users=new ArrayList<Customer>();
+	}
+	
 	/**
 	 * @return the users
 	 */
@@ -24,24 +30,31 @@ public class Manager {
 	public void setUsers(List<Customer> users) {
 		this.users = users;
 	}
-	/**
-	 * @return the accounts
-	 */
-	public List<Account> getAccounts() {
-		return accounts;
+	public Long getIdentifiant() {
+		return identifiant;
 	}
-	/**
-	 * @param accounts the accounts to set
-	 */
-	public void setAccounts(List<Account> accounts) {
-		this.accounts = accounts;
+
+	public void setIdentifiant(Long identifiant) {
+		this.identifiant = identifiant;
 	}
+	
+	public void insertAsks(List<Customer> customers) {
+		for (Customer customer : customers) {
+			if (!getUsers().contains(customer)) {
+				getUsers().add(customer);
+			} else {
+				Customer existingCustomer = getUsers().get(getUsers().indexOf(customer));
+				Account existingAccount = existingCustomer.getAccount();
+				existingAccount.setBalance(existingAccount.getBalance() + customer.getAccount().getBalance());
+				existingAccount.getCheques().addAll(customer.getAccount().getCheques());
+			}
+		}
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result
-				+ ((accounts == null) ? 0 : accounts.hashCode());
 		result = prime * result + ((users == null) ? 0 : users.hashCode());
 		return result;
 	}
@@ -54,11 +67,6 @@ public class Manager {
 		if (getClass() != obj.getClass())
 			return false;
 		Manager other = (Manager) obj;
-		if (accounts == null) {
-			if (other.accounts != null)
-				return false;
-		} else if (!accounts.equals(other.accounts))
-			return false;
 		if (users == null) {
 			if (other.users != null)
 				return false;

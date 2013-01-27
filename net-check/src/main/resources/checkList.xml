@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<manager>
+	<customer>
+		<name>Toto</name>
+		<lastName>Foo</lastName>
+		<location>AZE @ Perpi</location>
+		<account Solde="200.0">
+			<check>
+				<id>3</id>
+				<currency>USD</currency>
+			</check>
+			<check>
+				<id>4</id>
+				<currency>USD</currency>
+			</check>
+			<check>
+				<id>1</id>
+				<currency>EUR</currency>
+			</check>
+			<check>
+				<id>2</id>
+				<currency>USD</currency>
+			</check>
+			<check>
+				<id>0</id>
+				<currency>EUR</currency>
+			</check>
+		</account>
+	</customer>
+	<customer>
+		<name>Titi</name>
+		<lastName>uzaeiuyazue</lastName>
+		<location>AZE @ Perpi</location>
+		<account Solde="200.0">
+			<check>
+				<id>7</id>
+				<currency>CAD</currency>
+			</check>
+			<check>
+				<id>8</id>
+				<currency>CAD</currency>
+			</check>
+			<check>
+				<id>5</id>
+				<currency>HKD</currency>
+			</check>
+			<check>
+				<id>6</id>
+				<currency>HKD</currency>
+			</check>
+			<check>
+				<id>9</id>
+				<currency>CAD</currency>
+			</check>
+		</account>
+	</customer>
+</manager>

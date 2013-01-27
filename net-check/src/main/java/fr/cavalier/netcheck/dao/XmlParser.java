@@ -1,13 +1,14 @@
 package fr.cavalier.netcheck.dao;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
@@ -16,6 +17,7 @@ import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
+import org.xml.sax.helpers.DefaultHandler;
 
 /**
  * <p>Acces XML generique et gestion des exceptions</p>
@@ -29,6 +31,7 @@ public class XmlParser {
 	protected Document doc;
 	protected String input;
 	protected String output;
+	protected DefaultHandler gestionnaire;
 	
 	/**
 	 * <p> Methode en charge de l'ouverture et extraction du fichier xml </p>
@@ -93,6 +96,19 @@ public class XmlParser {
 		}
 	}
 	
+	/**
+	 * <p>Initialise le parseur sax avec le gestionnaire adequat</p>
+	 */
+	public void saxInit(){
+		SAXParserFactory factory = SAXParserFactory.newInstance();
+		try {
+			SAXParser parseur =factory.newSAXParser();
+			File fichier =new  File("src/main/resources/"+input+".xml");
+			parseur.parse(fichier, gestionnaire);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
+	}
 	
 	
 }

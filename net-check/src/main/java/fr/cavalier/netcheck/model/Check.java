@@ -8,13 +8,15 @@ import java.util.Date;
  * net-check
  * fr.cavalier.netcheck.model Check.java 
  */
-public class Check {
+public class Check implements Cloneable {
 
+	private Long id;
 	private String currency;
 	private double value;
 	private Date date;
 	private Customer user;
-	private Manager accountOwner;
+	private Long accountOwner;
+	
 	public String getCurrency() {
 		return currency;
 	}
@@ -39,27 +41,23 @@ public class Check {
 	public void setUser(Customer user) {
 		this.user = user;
 	}
-	public Manager getAccountOwner() {
+	public Long getAccountOwner() {
 		return accountOwner;
 	}
-	public void setAccountOwner(Manager accountOwner) {
+	public void setAccountOwner(Long accountOwner) {
 		this.accountOwner = accountOwner;
 	}
-	
-
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result
-				+ ((accountOwner == null) ? 0 : accountOwner.hashCode());
-		result = prime * result
-				+ ((currency == null) ? 0 : currency.hashCode());
-		result = prime * result + ((date == null) ? 0 : date.hashCode());
-		result = prime * result + ((user == null) ? 0 : user.hashCode());
-		long temp;
-		temp = Double.doubleToLongBits(value);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
 	@Override
@@ -71,29 +69,27 @@ public class Check {
 		if (getClass() != obj.getClass())
 			return false;
 		Check other = (Check) obj;
-		if (accountOwner == null) {
-			if (other.accountOwner != null)
+		if (id == null) {
+			if (other.id != null)
 				return false;
-		} else if (!accountOwner.equals(other.accountOwner))
-			return false;
-		if (currency == null) {
-			if (other.currency != null)
-				return false;
-		} else if (!currency.equals(other.currency))
-			return false;
-		if (date == null) {
-			if (other.date != null)
-				return false;
-		} else if (!date.equals(other.date))
-			return false;
-		if (user == null) {
-			if (other.user != null)
-				return false;
-		} else if (!user.equals(other.user))
-			return false;
-		if (Double.doubleToLongBits(value) != Double
-				.doubleToLongBits(other.value))
+		} else if (!id.equals(other.id))
 			return false;
 		return true;
 	}
+	
+	@Override
+	public Object clone() {
+		Check result = new Check();
+		result.setAccountOwner(this.getAccountOwner());
+		result.setCurrency(this.getCurrency());
+		result.setDate(this.getDate());
+		result.setUser(this.getUser());
+		result.setValue(this.getValue());
+		return result;
+	}
+	
+	
+	
+	
+	
 }

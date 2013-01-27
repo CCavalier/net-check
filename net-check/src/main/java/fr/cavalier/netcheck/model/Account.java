@@ -1,6 +1,7 @@
 package fr.cavalier.netcheck.model;
 
-import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author C Cavalier
@@ -10,12 +11,23 @@ import java.util.HashMap;
  */
 public class Account {
 
-	private HashMap<Check, Integer> cheques;
-	public HashMap<Check, Integer> getCheques() {
+	private Set<Check> cheques;
+	private double balance;
+	
+	public Account(){
+		cheques=new HashSet<Check>();
+	}
+	public Set<Check> getCheques() {
 		return cheques;
 	}
-	public void setCheques(HashMap<Check, Integer> cheques) {
+	public void setCheques(Set<Check> cheques) {
 		this.cheques = cheques;
+	}
+	public double getBalance() {
+		return balance;
+	}
+	public void setBalance(double balance) {
+		this.balance = balance;
 	}
 	public Customer getUser() {
 		return user;
@@ -55,9 +67,9 @@ public class Account {
 	}
 	
 	public void useCheck(Check cheque) throws Exception{
-		if(cheques.get(cheque)>= 0){
-			cheques.put(cheque, cheques.get(cheque)-1);
-		}else throw new Exception("No more check available");
+		if (getCheques().contains(cheque)) {
+			getCheques().remove(cheque);
+		}
 	
 	}
 
