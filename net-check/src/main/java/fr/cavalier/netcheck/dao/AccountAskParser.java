@@ -12,9 +12,8 @@ import fr.cavalier.netcheck.model.Manager;
  */
 public class AccountAskParser extends XmlParser {
 
-	public AccountAskParser(Manager manager){
-		super.input="accountAsk";
-		super.output="accountAsk";
+	public AccountAskParser(String input, Manager manager){
+		super.input=input;
 		super.gestionnaire =new AccountAskHandler(manager);
 	}
 	

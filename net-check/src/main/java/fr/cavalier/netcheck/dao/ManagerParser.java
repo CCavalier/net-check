@@ -40,7 +40,7 @@ public class ManagerParser extends XmlParser {
 		List<Check> allchecks = new ArrayList<Check>();
 		allchecks.addAll(compte.getAvailableCheques());
 		allchecks.addAll(compte.getUsedCheques());
-		for (Check cheque : compte.getAvailableCheques()) {
+		for (Check cheque : allchecks) {
 			// cheque
 			Element id = doc.createElement("id");
 			Element eCheck = doc.createElement("check");

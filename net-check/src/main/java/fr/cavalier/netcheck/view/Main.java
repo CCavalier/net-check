@@ -94,25 +94,35 @@ public class Main {
 		chequesDemandes2.put("EUR", 10);
 		chequesDemandes2.put("JPY", 1);
 		
+		Customer clientThree = new Customer("Teychene", "Francois", "18 rue des peupliers");
+		HashMap<String,Integer> chequesDemandes3= new HashMap<String,Integer>();
+		chequesDemandes3.put("EUR", 2);
+		
 		CustomerParser parser=new CustomerParser();
 		parser.initializeFromFile();
-		parser.askNewAccount(clientOne, chequesDemandes, 200.);
-		parser.askNewAccount(clientTwo, chequesDemandes2, 200.);
+		parser.askNewAccount(clientOne, chequesDemandes, 200);
+		parser.askNewAccount(clientTwo, chequesDemandes2, 200);
+		parser.setOutput("accountAsk.Manager0");
+		parser.transform();
+		parser.cleanDocument();
+		parser.setOutput("accountAsk.Manager1");
+		parser.askNewAccount(clientThree, chequesDemandes3, 50);
 		parser.transform();
 	}
 	
 	public static void accountOwnerReceiveAskedCheckAndReply() {
+		// Manager 0 recoit ses demandes
 		ManagerParser parser = new ManagerParser();
 		parser.setInput("manager0");
 		parser.initializeFromFile();
 		
 		Manager aManager = parser.retrieveManagerFromInput();
 		
-		// Récupération des demades
-		AccountAskParser askp=new AccountAskParser(aManager);
+		AccountAskParser askp=new AccountAskParser("accountAsk.Manager0", aManager);
 		askp.initializeFromFile();
 		askp.parse();
 		
+		// Recuperation des demandes
 		CheckListParser chkp = new CheckListParser();
 		chkp.initializeFromFile();
 		for (Customer customer : aManager.getUsers()) {
@@ -121,13 +131,41 @@ public class Main {
 			chkp.transform();
 		}
 		
+		//Enregistrement des cheques attribues
 		parser.setOutput("manager0");
+		parser.recordManager(aManager);
+		parser.transform();
+		
+		//Manager1 recoit ses demandes
+		parser = new ManagerParser();
+		parser.setInput("manager1");
+		parser.initializeFromFile();
+		
+		aManager = parser.retrieveManagerFromInput();
+		
+		// Recuperation des demandes
+		askp=new AccountAskParser("accountAsk.Manager1", aManager);
+		askp.initializeFromFile();
+		askp.parse();
+		
+		//Enregistrement des cheques attribues
+		chkp = new CheckListParser();
+		chkp.initializeFromFile();
+		for (Customer customer : aManager.getUsers()) {
+			chkp.setOutput("chequier."+customer.getName()+"-"+customer.getLastname());
+			chkp.recordCheckListForUser(customer);
+			chkp.transform();
+		}
+		
+		parser.setOutput("manager1");
 		parser.recordManager(aManager);
 		parser.transform();
 	}
 	
 	public static void customerReceiveCheckReplyAndPay() {
-		Customer client = new Customer();
+		Customer client1 = new Customer();
+		Customer client2 = new Customer();
+		Customer client3 = new Customer();
 		
 		Enterprise e1= new Enterprise();
 		e1.setName("E1");
@@ -137,24 +175,60 @@ public class Main {
 		e2.setName("E2");
 		e2.setLocation("adresse2");
 		
-		CheckListParser parser = new CheckListParser("chequier.Cavalier-Charlotte", client);
+		// Reception des cheques par le client Cavalier Charlotte
+		CheckListParser parser = new CheckListParser("chequier.Cavalier-Charlotte", client1);
 		parser.initializeFromFile();
 		parser.parse();
 		
+		// Creation de paiements pour le client
 		PaymentParser pp = new PaymentParser();
 		pp.initializeFromFile();
-		pp.addNewPaymentCheck(client.paiement("EUR", 100.0, e1));
-		pp.addNewPaymentCheck(client.paiement("EUR", 37.5, e1));
-		pp.addNewPaymentCheck(client.paiement("USD", 34.8, e2));
-		pp.setOutput("paiement");
+		pp.addNewPaymentCheck(client1.paiement("EUR", 100.0, e1));
+		pp.addNewPaymentCheck(client1.paiement("EUR", 37.5, e1));
+		pp.addNewPaymentCheck(client1.paiement("USD", 34.8, e2));
+		pp.setOutput("paiementCavalier");
+		pp.transform();
+		
+		
+		// Reception des cheques par le client Francois Teychene
+		parser = new CheckListParser("chequier.Teychene-Francois", client2);
+		parser.initializeFromFile();
+		parser.parse();
+		
+		// Creation de paiements pour le client
+		pp = new PaymentParser();
+		pp.initializeFromFile();
+		pp.addNewPaymentCheck(client2.paiement("EUR", 150, e1));
+		pp.setOutput("paiementTeychene");
+		pp.transform();
+		
+		// Reception des cheques par le client Francois Teychene
+		parser = new CheckListParser("chequier.Marchal-Pierre", client3);
+		parser.initializeFromFile();
+		parser.parse();
+		
+		// Creation de paiements pour le client
+		pp = new PaymentParser();
+		pp.initializeFromFile();
+		pp.addNewPaymentCheck(client3.paiement("EUR", 200.0, e1));
+		pp.addNewPaymentCheck(client3.paiement("EUR",50.0, e2));
+		pp.setOutput("paiementMarchal");
 		pp.transform();
 	}
 	
 	public static void enterpriseReceiveChecksForPayment() {
 		
-		PaymentParser pp = new PaymentParser("paiement", "");
+		List<Check> receivedChecks = new ArrayList<Check>();
+		
+		PaymentParser pp = new PaymentParser("paiementCavalier", "");
 		pp.initializeFromFile();
-		List<Check> receivedChecks = pp.parseAndGetCheckList();
+		receivedChecks.addAll(pp.parseAndGetCheckList());
+		pp = new PaymentParser("paiementTeychene", "");
+		pp.initializeFromFile();
+		receivedChecks.addAll(pp.parseAndGetCheckList());
+		pp = new PaymentParser("paiementMarchal", "");
+		pp.initializeFromFile();
+		receivedChecks.addAll(pp.parseAndGetCheckList());
 		
 		Enterprise entreprise = new Enterprise();
 		entreprise.setName("E1");
@@ -263,7 +337,7 @@ public class Main {
 	public static void main(String[] args) {
 		// Jeux de test
 		initializeManagers();
-//		// Process
+		// Process
 		customerAskCheckToAccountOwner();
 		accountOwnerReceiveAskedCheckAndReply();
 		customerReceiveCheckReplyAndPay();

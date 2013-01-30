@@ -5,7 +5,6 @@ import java.util.List;
 import org.w3c.dom.Node;
 
 import fr.cavalier.netcheck.model.Check;
-import fr.cavalier.netcheck.model.Enterprise;
 import fr.cavalier.netcheck.util.DateFormatter;
 
 /**
