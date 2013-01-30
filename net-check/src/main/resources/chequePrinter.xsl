@@ -8,23 +8,28 @@
   doctype-system="http://www.w3.org/TR/html4/strict.dtd"
   indent="yes" />	
 	
-	<xsl:template match="check">
+	<xsl:template match="/">
 		<html>
 			<body>
 				<h2>Cheque</h2>
 				<p>Valeur:</p>
-				<xsl:value-of select="value"/>
-				<xsl:value-of select="currency"/>
+				<xsl:value-of select="//value"/>
+				<xsl:value-of select="//currency"/>
+				<xsl:apply-templates/>
+				</body>
+		</html>
+	</xsl:template>
+	
+		<xsl:template match="check">
 				<p>Emetteur:</p>
-				<xsl:value-of select="id" />
 				<br/>
+				<xsl:value-of select="id" />
 				<p>Date:</p>
 				<xsl:value-of select="date" />
 				<div style="border: 1px solid grey">
 					<xsl:value-of select="customer/name"/>
 					<xsl:value-of select="customer/lastName"/>
 				</div>
-			</body>
-		</html>
-	</xsl:template>
+				
+				</xsl:template>
 </xsl:stylesheet>

@@ -40,6 +40,10 @@ public class XmlParser {
 	public void initializeFromFile (){
 		DocumentBuilderFactory factory =
 				DocumentBuilderFactory.newInstance();
+	      factory.setValidating(true);
+	      factory.setNamespaceAware(true);
+	      factory.setAttribute("http://java.sun.com/xml/jaxp/properties/schemaLanguage", 
+	              "http://www.w3.org/2001/XMLSchema");;
 		Document document = null;
 		try {
 			File f = new File("src/main/resources/"+input+".xml");
