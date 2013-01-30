@@ -25,16 +25,7 @@ public class CheckListParser extends XmlParser {
 		gestionnaire = new CheckListHandler(customer);
 	}
 	
-	private String generateFileNameForCustomer(Customer customer) {
-		StringBuilder result = new StringBuilder("checkList.");
-		result.append(customer.getName().trim().replaceAll(" ", "_"));
-		result.append("-");
-		result.append(customer.getLastname().trim().replaceAll(" ", "_"));
-		return result.toString();
-	}
-	
 	public void recordCheckListForUser(Customer customer) {
-		output = generateFileNameForCustomer(customer);
 		
 		Element client=doc.createElement("customer");
 		//name

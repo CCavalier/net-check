@@ -37,7 +37,7 @@ public class XmlParser {
 	/**
 	 * <p> Methode en charge de l'ouverture et extraction du fichier xml </p>
 	 */
-	public void parse (){
+	public void initializeFromFile (){
 		DocumentBuilderFactory factory =
 				DocumentBuilderFactory.newInstance();
 		Document document = null;
@@ -104,15 +104,50 @@ public class XmlParser {
 	/**
 	 * <p>Initialise le parseur sax avec le gestionnaire adequat</p>
 	 */
-	public void saxInit(){
+	public void parse(){
 		SAXParserFactory factory = SAXParserFactory.newInstance();
 		try {
 			SAXParser parseur =factory.newSAXParser();
 			File fichier =new  File("src/main/resources/"+input+".xml");
-			parseur.parse(fichier, gestionnaire);
+			if (fichier.exists()) {
+				parseur.parse(fichier, gestionnaire);
+			} else {
+				System.out.println("Le fichier source n'existe pas, le document est généré vide");
+			}
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 
+	}
+
+	public String getInput() {
+		return input;
+	}
+
+	public void setInput(String input) {
+		this.input = input;
+	}
+
+	public String getOutput() {
+		return output;
+	}
+
+	public void setOutput(String output) {
+		this.output = output;
+	}
+
+	public DefaultHandler getGestionnaire() {
+		return gestionnaire;
+	}
+
+	public void setGestionnaire(DefaultHandler gestionnaire) {
+		this.gestionnaire = gestionnaire;
+	}
+	
+	public void cleanDocument() {
+		if (this.doc != null) {
+			this.doc.removeChild(this.doc.getFirstChild());
+		}
 	}
 	
 	

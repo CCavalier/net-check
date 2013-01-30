@@ -9,6 +9,8 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 import fr.cavalier.netcheck.model.Check;
+import fr.cavalier.netcheck.model.Customer;
+import fr.cavalier.netcheck.model.Enterprise;
 import fr.cavalier.netcheck.util.DateFormatter;
 
 /**
@@ -41,6 +43,10 @@ public class PaymentHandler extends DefaultHandler {
 		
 		if(qName.equals("check")){
 			currentCheck = new Check();
+		} else if (qName.equals("customer")) {
+			currentCheck.setUser(new Customer());
+		} else if (qName.equals("entreprise")) {
+			currentCheck.setCible(new Enterprise());
 		}
 	}
 
@@ -76,11 +82,20 @@ public class PaymentHandler extends DefaultHandler {
 			try {
 				currentCheck.setDate(DateFormatter.convertStringToDate(lecture.trim()));
 			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				currentCheck.setDate(null);
 			}
 		} else if (currentTag.equals("value")) {
-			currentCheck.setValue(Double.parseDouble(lecture.trim()));
+			if (lecture.trim().length() > 0) {
+				currentCheck.setValue(Double.parseDouble(lecture.trim()));
+			} else {
+				currentCheck = null;
+			}
+		} else if (currentTag.equals("name")) {
+			currentCheck.getUser().setName(lecture);
+		} else if (currentTag.equals("lastname")) {
+			currentCheck.getUser().setLastname(lecture);
+		} else if (currentTag.equals("entreprise")) {
+			currentCheck.getCible().setName(lecture);
 		}
 	}
 

@@ -1,7 +1,9 @@
 package fr.cavalier.netcheck.model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author C Cavalier
@@ -14,10 +16,12 @@ public class Manager {
 	private Long identifiant;
 	private List<Customer> users;
 	private List<Enterprise> enterprises;
+	private List<Check> receivedChecks;
 	
 	public Manager(){
 		users=new ArrayList<Customer>();
 		enterprises = new ArrayList<Enterprise>();
+		receivedChecks = new ArrayList<Check>();
 	}
 	
 	/**
@@ -60,6 +64,33 @@ public class Manager {
 				existingAccount.getAvailableCheques().addAll(customer.getAccount().getAvailableCheques());
 			}
 		}
+	}
+	
+	public Map<Long,List<Check>> getAllReceivedChecksGroupByManager() {
+		Map<Long, List<Check>> result = new HashMap<Long, List<Check>>();
+		for (Check check : receivedChecks) {
+			if (!result.containsKey(check.getAccountOwner())) {
+				result.put(check.getAccountOwner(), new ArrayList<Check>());
+			}
+			result.get(check.getAccountOwner()).add(check);
+		}
+		return result;
+	}
+	
+	public void receiveChecksToCheck(List<Check> checks) {
+		for (Enterprise enterprise : getEnterprises()) {
+			for (Check check : checks) {
+				if (check.getCible().equals(enterprise)) {
+					receivedChecks.add(check);
+					enterprise.getAccount().setBalance(enterprise.getAccount().getBalance() + check.getValue());
+				}
+			}
+		}
+	}
+	
+	public void registerCheckUsedByClient(Check check) {
+		Customer registeredCustomer = getUsers().get(getUsers().indexOf(check.getUser()));
+		registeredCustomer.useCheck(check);
 	}
 
 	@Override

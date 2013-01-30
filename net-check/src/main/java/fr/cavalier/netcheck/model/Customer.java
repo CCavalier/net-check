@@ -117,10 +117,24 @@ public class Customer {
 		return this.getName() + " - " + this.getLastname();
 	}
 	
-	public Check paiement(String currency, double value) {
+	public Check paiement(String currency, double value, Enterprise e) {
 		if (getAccount().isAbleToPay(currency, value)) {
-			return getAccount().writeCheck(currency, value);
+			return getAccount().writeCheck(currency, value, e);
 		}
 		return null;
+	}
+	
+	public void useCheck(Check check) {
+		Check registeredCheck = null;
+		for (Check ownCheck : getAccount().getAvailableCheques()) {
+			if (ownCheck.getId().equals(check.getId())) {
+				registeredCheck = ownCheck;
+				break;
+			}
+		}
+		registeredCheck.setDate(check.getDate());
+		registeredCheck.setValue(check.getValue());
+		getAccount().getAvailableCheques().remove(registeredCheck);
+		getAccount().getUsedCheques().add(registeredCheck);
 	}
 }

@@ -76,5 +76,10 @@ public class Enterprise {
 			return false;
 		return true;
 	}
+	
+	@Override
+	public String toString() {
+		return this.getName();
+	}
 
 }

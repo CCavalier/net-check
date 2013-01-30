@@ -81,7 +81,6 @@ public class AccountAskContext {
 		}
 		if (getCurrentCustomer().getAccount() == null) {
 			getCurrentCustomer().setAccount(account);
-			account.setUser(getCurrentCustomer());
 			setCurrentAccount(account);
 		} else {
 			setCurrentAccount(getCurrentCustomer().getAccount());

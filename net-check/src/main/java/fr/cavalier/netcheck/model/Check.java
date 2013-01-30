@@ -12,21 +12,28 @@ public class Check implements Cloneable {
 
 	private Long id;
 	private String currency;
-	private double value;
+	private Double value;
 	private Date date;
 	private Customer user;
+	private Enterprise cible;
 	private Long accountOwner;
 	
 	public String getCurrency() {
 		return currency;
 	}
+	public Enterprise getCible() {
+		return cible;
+	}
+	public void setCible(Enterprise cible) {
+		this.cible = cible;
+	}
 	public void setCurrency(String currency) {
 		this.currency = currency;
 	}
-	public double getValue() {
+	public Double getValue() {
 		return value;
 	}
-	public void setValue(double value) {
+	public void setValue(Double value) {
 		this.value = value;
 	}
 	public Date getDate() {
@@ -89,7 +96,11 @@ public class Check implements Cloneable {
 	}
 	
 	
-	
+	public void fill(Enterprise e, double pValue, Date pDate){
+		this.cible=e;
+		this.value=pValue;
+		this.date=pDate;
+	}
 	
 	
 }

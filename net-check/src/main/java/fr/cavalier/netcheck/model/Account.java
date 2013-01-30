@@ -14,7 +14,6 @@ public class Account {
 
 	private Set<Check> availableCheques;
 	private Set<Check> usedCheques;
-	private Customer user;
 	private double balance;
 	
 	public Account(){
@@ -46,14 +45,6 @@ public class Account {
 		this.balance = balance;
 	}
 	
-	public Customer getUser() {
-		return user;
-	}
-	
-	public void setUser(Customer user) {
-		this.user = user;
-	}
-	
 	public Check getAvailableCheckForCurrency(String currency) {
 		Check result = null;
 		for (Check check : getAvailableCheques()) {
@@ -73,11 +64,11 @@ public class Account {
 		return false;
 	}
 	
-	public Check writeCheck(String currency, double value) {
+	public Check writeCheck(String currency, double value, Enterprise e) {
 		Check availableCheck = getAvailableCheckForCurrency(currency);
-		availableCheck.setValue(value);
-		availableCheck.setDate(new Date());
-		
+		//availableCheck.setValue(value);
+		//availableCheck.setDate(new Date());
+		availableCheck.fill(e,value,new Date());
 		setBalance(getBalance() - value);
 		getAvailableCheques().remove(availableCheck);
 		getUsedCheques().add(availableCheck);
@@ -97,7 +88,6 @@ public class Account {
 		result = prime * result + (int) (temp ^ (temp >>> 32));
 		result = prime * result
 				+ ((usedCheques == null) ? 0 : usedCheques.hashCode());
-		result = prime * result + ((user == null) ? 0 : user.hashCode());
 		return result;
 	}
 
@@ -122,11 +112,6 @@ public class Account {
 			if (other.usedCheques != null)
 				return false;
 		} else if (!usedCheques.equals(other.usedCheques))
-			return false;
-		if (user == null) {
-			if (other.user != null)
-				return false;
-		} else if (!user.equals(other.user))
 			return false;
 		return true;
 	}
