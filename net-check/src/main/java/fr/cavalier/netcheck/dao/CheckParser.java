@@ -35,8 +35,7 @@ public class CheckParser extends XmlParser {
 	}
 	
 	public void checkGenerator() {
-		initializeFile();
-		Node root = doc.getFirstChild();
+		Node root = doc.createElement("commandCheck");
 		//cheque
 		Node checkNode = doc.createElement("check");
 		//id
@@ -76,5 +75,10 @@ public class CheckParser extends XmlParser {
 		
 		root.appendChild(customer);
 		root.appendChild(checkNode);
+		
+		if (doc.getFirstChild() != null) {
+			doc.removeChild(doc.getFirstChild());
+		}
+		doc.appendChild(root);
 	}
 }
