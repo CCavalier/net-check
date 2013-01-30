@@ -2,6 +2,7 @@ package fr.cavalier.netcheck.dao;
 
 import java.util.List;
 
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 import fr.cavalier.netcheck.model.Check;
@@ -30,7 +31,7 @@ public class PaymentParser extends XmlParser {
 	}
 	
 	private void initializeFile() {
-		Node root = doc.getFirstChild();
+		Element root = doc.getDocumentElement();
 		if (root == null) {
 			root = doc.createElement("paymentChecks");
 			doc.appendChild(root);
@@ -39,6 +40,9 @@ public class PaymentParser extends XmlParser {
 			root = doc.createElement("paymentChecks");
 			doc.appendChild(root);
 		}
+		root.setAttribute("xmlns","http://www.ccavalier.fr");
+		root.setAttribute("xsi:schemaLocation", "http://www.ccavalier.fr payment.xsd");
+		root.setAttribute("xmlns:xsi","http://www.w3.org/2001/XMLSchema-instance");
 	}
 	
 	public void addNewPaymentCheck(Check cheque) {
