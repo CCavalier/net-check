@@ -79,6 +79,7 @@ public class ManagerParser extends XmlParser {
 	 * @param manager
 	 */
 	public void recordManager(Manager manager) {
+		cleanDocument();
 		Account compte;
 
 		Node root = doc.createElement("manager");

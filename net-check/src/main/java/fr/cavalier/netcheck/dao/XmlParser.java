@@ -145,7 +145,7 @@ public class XmlParser {
 	}
 	
 	public void cleanDocument() {
-		if (this.doc != null) {
+		if (this.doc != null && this.doc.getFirstChild() != null ) {
 			this.doc.removeChild(this.doc.getFirstChild());
 		}
 	}

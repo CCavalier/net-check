@@ -43,8 +43,6 @@ public class ManagerHandler extends DefaultHandler {
 	 * @param attributes  la liste des attributs de la balise
 	 */
 	public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
-		
-		System.out.println("Start:"+qName);
 		currentTag = qName;
 		
 		if(qName.equals("customers")){
@@ -68,7 +66,6 @@ public class ManagerHandler extends DefaultHandler {
 	 */
 	public void endElement(String uri, String localName, String qName)
 			throws SAXException {
-		System.out.println("End:"+qName);
 		currentTag = "";
 
 		if(qName.equals("customers")){
@@ -102,7 +99,6 @@ public class ManagerHandler extends DefaultHandler {
 			throws SAXException {
 	
 		String lecture = new String(ch, start, length);
-		System.out.println("char:"+lecture);
 
 		if (currentTag.equals("name")) {
 			if (isCustomerMode) {
@@ -140,13 +136,6 @@ public class ManagerHandler extends DefaultHandler {
 	 */
 	public void startDocument() throws SAXException {
 		manager = new Manager();
-	}
-
-	/**
-	 * fin du parsing
-	 */
-	public void endDocument() throws SAXException {
-		System.out.println("End parsing");
 	}
 
 	public Manager getManager() {

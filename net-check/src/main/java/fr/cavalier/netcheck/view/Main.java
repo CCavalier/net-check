@@ -94,7 +94,7 @@ public class Main {
 		chequesDemandes2.put("EUR", 10);
 		chequesDemandes2.put("JPY", 1);
 		
-		Customer clientThree = new Customer("Teychene", "Francois", "18 rue des peupliers");
+		Customer clientThree = new Customer("Marchal", "Pierre", "46 avenue des landes");
 		HashMap<String,Integer> chequesDemandes3= new HashMap<String,Integer>();
 		chequesDemandes3.put("EUR", 2);
 		
@@ -116,16 +116,16 @@ public class Main {
 		parser.setInput("manager0");
 		parser.initializeFromFile();
 		
-		Manager aManager = parser.retrieveManagerFromInput();
+		Manager aManager0 = parser.retrieveManagerFromInput();
 		
-		AccountAskParser askp=new AccountAskParser("accountAsk.Manager0", aManager);
+		AccountAskParser askp=new AccountAskParser("accountAsk.Manager0", aManager0);
 		askp.initializeFromFile();
 		askp.parse();
 		
 		// Recuperation des demandes
 		CheckListParser chkp = new CheckListParser();
 		chkp.initializeFromFile();
-		for (Customer customer : aManager.getUsers()) {
+		for (Customer customer : aManager0.getUsers()) {
 			chkp.setOutput("chequier."+customer.getName()+"-"+customer.getLastname());
 			chkp.recordCheckListForUser(customer);
 			chkp.transform();
@@ -133,7 +133,7 @@ public class Main {
 		
 		//Enregistrement des cheques attribues
 		parser.setOutput("manager0");
-		parser.recordManager(aManager);
+		parser.recordManager(aManager0);
 		parser.transform();
 		
 		//Manager1 recoit ses demandes
@@ -141,24 +141,24 @@ public class Main {
 		parser.setInput("manager1");
 		parser.initializeFromFile();
 		
-		aManager = parser.retrieveManagerFromInput();
+		Manager aManager1 = parser.retrieveManagerFromInput();
 		
 		// Recuperation des demandes
-		askp=new AccountAskParser("accountAsk.Manager1", aManager);
+		askp=new AccountAskParser("accountAsk.Manager1", aManager1);
 		askp.initializeFromFile();
 		askp.parse();
 		
 		//Enregistrement des cheques attribues
 		chkp = new CheckListParser();
 		chkp.initializeFromFile();
-		for (Customer customer : aManager.getUsers()) {
+		for (Customer customer : aManager1.getUsers()) {
 			chkp.setOutput("chequier."+customer.getName()+"-"+customer.getLastname());
 			chkp.recordCheckListForUser(customer);
 			chkp.transform();
 		}
 		
 		parser.setOutput("manager1");
-		parser.recordManager(aManager);
+		parser.recordManager(aManager1);
 		parser.transform();
 	}
 	
@@ -267,16 +267,17 @@ public class Main {
 	}
 	
 	public static void accountOwnerReceivePaymentsForAnEnterprise() {
-		ManagerParser parser = new ManagerParser();
-		parser.setInput("manager0");
-		parser.initializeFromFile();
+		ManagerParser parser0 = new ManagerParser();
+		parser0.setInput("manager0");
+		parser0.initializeFromFile();
 		
-		Manager manager0 = parser.retrieveManagerFromInput();
+		Manager manager0 = parser0.retrieveManagerFromInput();
 		
-		parser.setInput("manager1");
-		parser.initializeFromFile();
+		ManagerParser parser1 = new ManagerParser();
+		parser1.setInput("manager1");
+		parser1.initializeFromFile();
 		
-		Manager manager1 = parser.retrieveManagerFromInput();
+		Manager manager1 = parser1.retrieveManagerFromInput();
 		
 		Manager[] managers = new Manager[] {manager0, manager1 };
 		
@@ -310,6 +311,14 @@ public class Main {
 				pp.transform();
 			}
 		}
+		
+		parser0.setOutput("manager0");
+		parser0.recordManager(manager0);
+		parser0.transform();
+		
+		parser1.setOutput("manager1");
+		parser1.recordManager(manager1);
+		parser1.transform();
 	}
 	
 	public static void accountOwnerReceivePaymentsForClients() {
@@ -328,6 +337,23 @@ public class Main {
 
 		parser.setOutput("manager0");
 		parser.recordManager(manager0);
+		parser.transform();
+		
+		ManagerParser parser1 = new ManagerParser();
+		parser1.setInput("manager1");
+		parser1.initializeFromFile();
+		
+		Manager manager1 = parser1.retrieveManagerFromInput();
+		
+		PaymentParser pp1 = new PaymentParser("paiementForManager1", "");
+		pp1.initializeFromFile();
+		List<Check> receivedChecks1 = pp1.parseAndGetCheckList();
+		for (Check check : receivedChecks1) {
+			manager1.registerCheckUsedByClient(check);
+		}
+
+		parser.setOutput("manager1");
+		parser.recordManager(manager1);
 		parser.transform();
 	}
 

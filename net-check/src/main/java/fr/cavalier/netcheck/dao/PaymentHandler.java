@@ -37,8 +37,6 @@ public class PaymentHandler extends DefaultHandler {
 	 * @param attributes  la liste des attributs de la balise
 	 */
 	public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
-		
-		System.out.println("Start:"+qName);
 		currentTag = qName;
 		
 		if(qName.equals("check")){
@@ -53,9 +51,7 @@ public class PaymentHandler extends DefaultHandler {
 	/**
 	 * détection fin de balise
 	 */
-	public void endElement(String uri, String localName, String qName)
-			throws SAXException {
-		System.out.println("End:"+qName);
+	public void endElement(String uri, String localName, String qName) throws SAXException {
 		currentTag = "";
 		if (qName.equals("check")){
 			receivedChecks.add(currentCheck);
@@ -70,7 +66,6 @@ public class PaymentHandler extends DefaultHandler {
 			throws SAXException {
 	
 		String lecture = new String(ch, start, length);
-		System.out.println("char:"+lecture);
 
 		if (currentTag.equals("currency")) {
 			currentCheck.setCurrency(lecture);
@@ -103,13 +98,6 @@ public class PaymentHandler extends DefaultHandler {
 	 * début du parsing
 	 */
 	public void startDocument() throws SAXException {
-	}
-
-	/**
-	 * fin du parsing
-	 */
-	public void endDocument() throws SAXException {
-		System.out.println("End parsing");
 	}
 
 	public List<Check> getReceivedChecks() {

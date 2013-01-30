@@ -42,7 +42,6 @@ public class CheckListHandler extends DefaultHandler {
 	 */
 	public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
 		
-		System.out.println("Start:"+qName);
 		currentTag = qName;
 		
 		if(qName.equals("account")){
@@ -57,9 +56,7 @@ public class CheckListHandler extends DefaultHandler {
 	/**
 	 * détection fin de balise
 	 */
-	public void endElement(String uri, String localName, String qName)
-			throws SAXException {
-		System.out.println("End:"+qName);
+	public void endElement(String uri, String localName, String qName) throws SAXException {
 		currentTag = "";
 		if (qName.equals("check")){
 			getCustomer().getAccount().getAvailableCheques().add(currentCheck);
@@ -75,7 +72,6 @@ public class CheckListHandler extends DefaultHandler {
 			throws SAXException {
 	
 		String lecture = new String(ch, start, length);
-		System.out.println("char:"+lecture);
 
 		if (currentTag.equals("name")) {
 			getCustomer().setName(lecture);
@@ -90,19 +86,6 @@ public class CheckListHandler extends DefaultHandler {
 		} else if (currentTag.equals("accountOwner")) {
 			currentCheck.setAccountOwner(Long.parseLong(lecture.trim()));
 		}
-	}
-
-	/**
-	 * début du parsing
-	 */
-	public void startDocument() throws SAXException {
-	}
-
-	/**
-	 * fin du parsing
-	 */
-	public void endDocument() throws SAXException {
-		System.out.println("End parsing");
 	}
 	
 }

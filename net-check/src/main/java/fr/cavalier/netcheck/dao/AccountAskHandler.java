@@ -34,8 +34,6 @@ public class AccountAskHandler extends DefaultHandler {
 	 * @param attributes  la liste des attributs de la balise
 	 */
 	public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
-		
-		System.out.println("Start:"+qName);
 		currentTag = qName;
 		
 		if(qName.equals("customer")){
@@ -55,9 +53,7 @@ public class AccountAskHandler extends DefaultHandler {
 	/**
 	 * détection fin de balise
 	 */
-	public void endElement(String uri, String localName, String qName)
-			throws SAXException {
-		System.out.println("End:"+qName);
+	public void endElement(String uri, String localName, String qName) throws SAXException {
 		currentTag = "";
 		if (qName.equals("customer")){
 			context.finishCustomer();
@@ -77,7 +73,6 @@ public class AccountAskHandler extends DefaultHandler {
 			throws SAXException {
 	
 		String lecture = new String(ch, start, length);
-		System.out.println("char:"+lecture);
 
 		if (currentTag.equals("name")) {
 			context.getCurrentCustomer().setName(lecture);
@@ -94,25 +89,9 @@ public class AccountAskHandler extends DefaultHandler {
 	}
 
 	/**
-	 * début du parsing
-	 */
-	public void startDocument() throws SAXException {
-	}
-
-	/**
 	 * fin du parsing
 	 */
 	public void endDocument() throws SAXException {
-		System.out.println("End parsing");
-//		for(Customer c: context.getCustomerList()){
-//			System.out.println("-> "+c.toString());
-//		}
-//		for(Account a: context.getAllAccounts()){
-//			System.out.println("-> "+a.getUser().toString()+" : "+a.getBalance());
-//		}
-//		for (Check c : context.getAllChecks()) {
-//			System.out.println("-> "+c.getUser().toString()+" : " + c.getId() + " / " + c.getCurrency());
-//		}
 		getManager().insertAsks(context.getCustomerList());
 	}
 

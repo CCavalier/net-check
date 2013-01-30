@@ -136,5 +136,6 @@ public class Customer {
 		registeredCheck.setValue(check.getValue());
 		getAccount().getAvailableCheques().remove(registeredCheck);
 		getAccount().getUsedCheques().add(registeredCheck);
+		getAccount().setBalance(getAccount().getBalance() - check.getValue());
 	}
 }
