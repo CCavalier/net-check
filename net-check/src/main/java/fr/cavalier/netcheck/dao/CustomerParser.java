@@ -20,11 +20,9 @@ public class CustomerParser extends XmlParser {
 	
 	public CustomerParser(){
 		super();
-		super.input="accountAsk";
-		super.output="accountAsk";
 	}
 	
-	private void initializeFile() {
+	private void initializeRootNode() {
 		Node root = doc.getFirstChild();
 		if (root == null) {
 			root = doc.createElement("askList");
@@ -44,7 +42,7 @@ public class CustomerParser extends XmlParser {
 	 * @param balance
 	 */
 	public void askNewAccount(Customer c, HashMap<String,Integer> cheque, double balance){
-		initializeFile();
+		initializeRootNode();
 		NodeList nl = doc.getElementsByTagName("askList");
 		Node root = nl.item(0);
 		

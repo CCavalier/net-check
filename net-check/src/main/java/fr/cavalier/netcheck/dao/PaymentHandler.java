@@ -98,6 +98,7 @@ public class PaymentHandler extends DefaultHandler {
 	 * début du parsing
 	 */
 	public void startDocument() throws SAXException {
+		receivedChecks = new ArrayList<Check>();
 	}
 
 	public List<Check> getReceivedChecks() {

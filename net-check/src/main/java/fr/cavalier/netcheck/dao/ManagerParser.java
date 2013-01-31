@@ -3,6 +3,8 @@ package fr.cavalier.netcheck.dao;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.xml.parsers.ParserConfigurationException;
+
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
@@ -21,15 +23,15 @@ public class ManagerParser extends XmlParser {
 
 	public ManagerParser() {
 		super();
-		super.input = "manager";
-		super.output = "manager";
+		// super.input = "manager";
+		// super.output = "manager";
 		super.gestionnaire = new ManagerHandler();
 	}
 
 	public ManagerParser(String input, String output) {
 		this();
-		super.input = input;
-		super.output = output;
+		// super.input = input;
+		// super.output = output;
 	}
 
 	public Manager getManagerForId(Long identifiant) {
@@ -55,19 +57,14 @@ public class ManagerParser extends XmlParser {
 			if (cheque.getValue() != null) {
 				value.setTextContent(cheque.getValue().toString());
 				eCheck.appendChild(value);
-			} else {
-				//value.setTextContent(null);
 			}
-			//eCheck.appendChild(value);
 
 			Element date = doc.createElement("date");
 			if (cheque.getDate() != null) {
-				date.setTextContent(DateFormatter.convertDateToString(cheque.getDate()));
+				date.setTextContent(DateFormatter.convertDateToString(cheque
+						.getDate()));
 				eCheck.appendChild(date);
-			} else {
-				//date.setNodeValue(nodeValue)
 			}
-			//eCheck.appendChild(date);
 
 			eCompte.appendChild(eCheck);
 		}
@@ -79,14 +76,11 @@ public class ManagerParser extends XmlParser {
 	 * </p>
 	 * 
 	 * @param manager
+	 * @throws ParserConfigurationException 
 	 */
-	public void recordManager(Manager manager) {
+	public void recordManager(Manager manager) throws ParserConfigurationException {
 		cleanDocument();
-		Account compte;
 
-	//	Node root = doc.createElement("manager");
-		
-		
 		Element root = doc.getDocumentElement();
 		if (root == null) {
 			root = doc.createElement("manager");
@@ -96,15 +90,17 @@ public class ManagerParser extends XmlParser {
 			root = doc.createElement("manager");
 			doc.appendChild(root);
 		}
-		root.setAttribute("xmlns","http://www.ccavalier.fr");
-		root.setAttribute("xsi:schemaLocation", "http://www.ccavalier.fr manager.xsd");
-		root.setAttribute("xmlns:xsi","http://www.w3.org/2001/XMLSchema-instance");
-		
+		root.setAttribute("xmlns", "http://www.ccavalier.fr");
+		root.setAttribute("xsi:schemaLocation",
+				"http://www.ccavalier.fr manager.xsd");
+		root.setAttribute("xmlns:xsi",
+				"http://www.w3.org/2001/XMLSchema-instance");
 
 		Node idNode = doc.createElement("identifiant");
 		idNode.setTextContent(manager.getIdentifiant().toString());
 		root.appendChild(idNode);
 
+		Account compte;
 		Node customersNode = doc.createElement("customers");
 		for (Customer c : manager.getUsers()) {
 			Element client = doc.createElement("customer");
@@ -162,8 +158,8 @@ public class ManagerParser extends XmlParser {
 		doc.appendChild(root);
 	}
 
-	public Manager retrieveManagerFromInput() {
-		parse();
+	public Manager retrieveManagerFromInput(String fileName) {
+		parse(fileName);
 		return ((ManagerHandler) getGestionnaire()).getManager();
 	}
 }

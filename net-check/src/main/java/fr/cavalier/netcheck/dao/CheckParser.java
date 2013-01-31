@@ -18,24 +18,7 @@ public class CheckParser extends XmlParser {
 	
 	public CheckParser(Check cheque){
 		this.cheque=cheque;
-		super.input=cheque.getUser().getName()+cheque.getId().toString()+"cheque";
-		super.output=cheque.getUser().getName()+cheque.getId().toString()+"cheque";
 		super.gestionnaire = null;
-	}
-	
-	private void initializeFile() {
-		Element root = doc.getDocumentElement();
-		if (root == null) {
-			root = doc.createElement(output);
-			doc.appendChild(root);
-		} else if (!root.getNodeName().equals(output)) {
-			doc.removeChild(root);
-			root = doc.createElement(output);
-			doc.appendChild(root);
-		}
-		root.setAttribute("xmlns","http://www.ccavalier.fr");
-		root.setAttribute("xsi:schemaLocation", "http://www.ccavalier.fr check.xsd");
-		root.setAttribute("xmlns:xsi","http://www.w3.org/2001/XMLSchema-instance");
 	}
 	
 	public void checkGenerator() {

@@ -15,13 +15,10 @@ import fr.cavalier.netcheck.model.Customer;
 public class CheckListParser extends XmlParser {
 	
 	public CheckListParser() {
-		super.input="checkList";
-		super.output="checkList";
 	}
 	
-	public CheckListParser(String inputFile, Customer customer) {
+	public CheckListParser(Customer customer) {
 		this();
-		super.input= inputFile;
 		gestionnaire = new CheckListHandler(customer);
 	}
 	

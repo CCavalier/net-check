@@ -2,6 +2,8 @@ package fr.cavalier.netcheck.dao;
 
 import java.util.List;
 
+import javax.xml.parsers.ParserConfigurationException;
+
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
@@ -19,15 +21,7 @@ public class PaymentParser extends XmlParser {
 	private CheckParser chequeParser;
 	
 	public PaymentParser(){
-		super.input="paymentAsk";
-		super.output="paymentAsk";
 		super.gestionnaire = new PaymentHandler();
-	}
-	
-	public PaymentParser(String input, String output) {
-		this();
-		super.input = input;
-		super.output = output;
 	}
 	
 	private void initializeFile() {
@@ -45,15 +39,14 @@ public class PaymentParser extends XmlParser {
 		root.setAttribute("xmlns:xsi","http://www.w3.org/2001/XMLSchema-instance");
 	}
 	
-	public void addNewPaymentCheck(Check cheque) {
+	public void addNewPaymentCheck(Check cheque) throws ParserConfigurationException {
 		initializeFile();
 		Node root = doc.getFirstChild();
-		//cheque
 		
-		chequeParser=new CheckParser(cheque);
-		chequeParser.initializeFromFile();
+		chequeParser = new CheckParser(cheque);
+		chequeParser.initializeDocument();
 		chequeParser.checkGenerator();
-		chequeParser.transform();
+		chequeParser.saveDocumentToFile(cheque.getUser().getName()+cheque.getId().toString()+"cheque");
 		
 		Node checkNode = doc.createElement("check");
 		//id
@@ -98,8 +91,8 @@ public class PaymentParser extends XmlParser {
 		root.appendChild(checkNode);
 	}
 	
-	public List<Check> parseAndGetCheckList() {
-		this.parse();
+	public List<Check> parseAndGetCheckList(String fileName) {
+		this.parse(fileName);
 		return ((PaymentHandler)super.gestionnaire).getReceivedChecks();
 	}
 
