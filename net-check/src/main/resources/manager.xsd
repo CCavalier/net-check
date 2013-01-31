@@ -19,10 +19,10 @@
 						</xs:sequence>
 					</xs:complexType>
 				</xs:element>
-				<xs:element name="entreprises">
+				<xs:element name="enterprises">
 					<xs:complexType>
 						<xs:sequence>
-							<xs:element name="entreprise" type="entreprise"
+							<xs:element name="enterprise" type="enterprise"
 								maxOccurs="unbounded" />
 						</xs:sequence>
 					</xs:complexType>
@@ -78,9 +78,14 @@
 			<xs:element name="name" type="strValue" />
 			<xs:element name="lastName" type="strValue" />
 			<xs:element name="location" type="strValue" />
-			<xs:element name="account" type="account" minOccurs="1" />
+			<xs:element name="account" type="accountC" minOccurs="1" />
 		</xs:sequence>
 	</xs:complexType>
-	<xs:complexType name="entreprise">
+	<xs:complexType name="enterprise">
+	<xs:sequence>
+	<xs:element name="name" type="strValue"/>
+	<xs:element name="location" type="strValue"/>
+	<xs:element name="account" type="account"/>
+	</xs:sequence>
 	</xs:complexType>
 </xs:schema>
