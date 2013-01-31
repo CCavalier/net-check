@@ -102,11 +102,13 @@ public class Main {
 		parser.initializeFromFile();
 		parser.askNewAccount(clientOne, chequesDemandes, 200);
 		parser.askNewAccount(clientTwo, chequesDemandes2, 200);
+		parser.setDtdFile("accountAsk.dtd");
 		parser.setOutput("accountAsk.Manager0");
 		parser.transform();
 		parser.cleanDocument();
 		parser.setOutput("accountAsk.Manager1");
 		parser.askNewAccount(clientThree, chequesDemandes3, 50);
+		parser.setDtdFile("accountAsk.dtd");
 		parser.transform();
 	}
 	

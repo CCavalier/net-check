@@ -82,7 +82,22 @@ public class ManagerParser extends XmlParser {
 		cleanDocument();
 		Account compte;
 
-		Node root = doc.createElement("manager");
+	//	Node root = doc.createElement("manager");
+		
+		
+		Element root = doc.getDocumentElement();
+		if (root == null) {
+			root = doc.createElement("manager");
+			doc.appendChild(root);
+		} else if (!root.getNodeName().equals("manager")) {
+			doc.removeChild(root);
+			root = doc.createElement("manager");
+			doc.appendChild(root);
+		}
+		root.setAttribute("xmlns","http://www.ccavalier.fr");
+		root.setAttribute("xsi:schemaLocation", "http://www.ccavalier.fr manager.xsd");
+		root.setAttribute("xmlns:xsi","http://www.w3.org/2001/XMLSchema-instance");
+		
 
 		Node idNode = doc.createElement("identifiant");
 		idNode.setTextContent(manager.getIdentifiant().toString());
