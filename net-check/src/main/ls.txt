@@ -1,0 +1,43 @@
+java:
+fr
+
+java/fr:
+cavalier
+
+java/fr/cavalier:
+netcheck
+
+java/fr/cavalier/netcheck:
+dao  model  util  view
+
+java/fr/cavalier/netcheck/dao:
+AccountAskContext.java	CheckListParser.java  ManagerParser.java
+AccountAskHandler.java	CheckParser.java      PaymentHandler.java
+AccountAskParser.java	CustomerParser.java   PaymentParser.java
+CheckListHandler.java	ManagerHandler.java   XmlParser.java
+
+java/fr/cavalier/netcheck/dao/AccountAskParser.java
+java/fr/cavalier/netcheck/dao/CheckListParser.java
+java/fr/cavalier/netcheck/dao/CheckParser.java
+java/fr/cavalier/netcheck/dao/CustomerParser.java
+java/fr/cavalier/netcheck/dao/ManagerParser.java
+java/fr/cavalier/netcheck/dao/PaymentParser.java
+java/fr/cavalier/netcheck/dao/XmlParser.java
+
+
+java/fr/cavalier/netcheck/model:
+Account.java  Check.java  Customer.java  Enterprise.java  Manager.java
+
+java/fr/cavalier/netcheck/util:
+CheckIdGenerator.java  DateFormatter.java
+
+java/fr/cavalier/netcheck/view:
+Main.java
+
+resources:
+accountAsk.dtd	      chequier.Cavalier-Charlotte.xml  paiement.E2.xml
+accountAsk.xml	      chequier.Teychene-Francois.xml   paiementForManager0.xml
+Cavalier0cheque.xml   manager0.xml		       paiement.xml
+Cavalier10cheque.xml  manager1.xml		       paymentAsk.xsl
+Cavalier1cheque.xml   manager.xsl
+chequePrinter.xsl     paiement.E1.xml

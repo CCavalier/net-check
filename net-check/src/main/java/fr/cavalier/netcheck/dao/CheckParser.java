@@ -1,5 +1,6 @@
 package fr.cavalier.netcheck.dao;
 
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 import fr.cavalier.netcheck.model.Check;
@@ -23,7 +24,7 @@ public class CheckParser extends XmlParser {
 	}
 	
 	private void initializeFile() {
-		Node root = doc.getFirstChild();
+		Element root = doc.getDocumentElement();
 		if (root == null) {
 			root = doc.createElement(output);
 			doc.appendChild(root);
@@ -32,10 +33,17 @@ public class CheckParser extends XmlParser {
 			root = doc.createElement(output);
 			doc.appendChild(root);
 		}
+		root.setAttribute("xmlns","http://www.ccavalier.fr");
+		root.setAttribute("xsi:schemaLocation", "http://www.ccavalier.fr check.xsd");
+		root.setAttribute("xmlns:xsi","http://www.w3.org/2001/XMLSchema-instance");
 	}
 	
 	public void checkGenerator() {
-		Node root = doc.createElement("commandCheck");
+		Element root = doc.createElement("commandCheck");
+	
+		root.setAttribute("xmlns","http://www.ccavalier.fr");
+		root.setAttribute("xsi:schemaLocation", "http://www.ccavalier.fr check.xsd");
+		root.setAttribute("xmlns:xsi","http://www.w3.org/2001/XMLSchema-instance");
 		//cheque
 		Node checkNode = doc.createElement("check");
 		//id

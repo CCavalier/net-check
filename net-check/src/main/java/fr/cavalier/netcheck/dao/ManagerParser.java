@@ -54,18 +54,20 @@ public class ManagerParser extends XmlParser {
 			Element value = doc.createElement("value");
 			if (cheque.getValue() != null) {
 				value.setTextContent(cheque.getValue().toString());
+				eCheck.appendChild(value);
 			} else {
-				value.setTextContent(null);
+				//value.setTextContent(null);
 			}
-			eCheck.appendChild(value);
+			//eCheck.appendChild(value);
 
 			Element date = doc.createElement("date");
 			if (cheque.getDate() != null) {
 				date.setTextContent(DateFormatter.convertDateToString(cheque.getDate()));
+				eCheck.appendChild(date);
 			} else {
-				value.setTextContent(null);
+				//date.setNodeValue(nodeValue)
 			}
-			eCheck.appendChild(date);
+			//eCheck.appendChild(date);
 
 			eCompte.appendChild(eCheck);
 		}

@@ -28,6 +28,9 @@ public class CheckListParser extends XmlParser {
 	public void recordCheckListForUser(Customer customer) {
 		
 		Element client=doc.createElement("customer");
+		client.setAttribute("xmlns","http://www.ccavalier.fr");
+		client.setAttribute("xsi:schemaLocation", "http://www.ccavalier.fr chequier.xsd");
+		client.setAttribute("xmlns:xsi","http://www.w3.org/2001/XMLSchema-instance");
 		//name
 		Element name=doc.createElement("name");
 		name.setTextContent(customer.getName());
