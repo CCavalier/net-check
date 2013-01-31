@@ -1,35 +1,21 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
 	targetNamespace="http://www.ccavalier.fr" xmlns="http://www.ccavalier.fr"
 	elementFormDefault="qualified">
-	<xs:element name="manager">
+	<xs:element name="commandCheck">
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element name="identifiant">
-					<xs:simpleType>
-						<xs:restriction base="xs:integer">
-							<xs:minInclusive value="0" />
-						</xs:restriction>
-					</xs:simpleType>
-				</xs:element>
-				<xs:element name="customers">
-					<xs:complexType>
-						<xs:sequence>
-							<xs:element name="customer" type="customer" maxOccurs="unbounded" />
-						</xs:sequence>
-					</xs:complexType>
-				</xs:element>
-				<xs:element name="enterprises">
-					<xs:complexType>
-						<xs:sequence>
-							<xs:element name="enterprise" type="enterprise"
-								maxOccurs="unbounded" />
-						</xs:sequence>
-					</xs:complexType>
-				</xs:element>
+				<xs:element name="customer" type="customer" />
+				<xs:element name="check" type="check"/>
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
+	<xs:complexType name="customer">
+		<xs:sequence>
+			<xs:element name="name" type="strValue" />
+			<xs:element name="lastName" type="strValue" />
+		</xs:sequence>
+	</xs:complexType>
 	<xs:simpleType name="devise">
 		<xs:restriction base="xs:string">
 			<xs:pattern value="[A-Z][A-Z][A-Z]" />
@@ -63,29 +49,16 @@
 				</xs:simpleType>
 			</xs:element>
 			<xs:element name="currency" type="devise" default="EUR" />
-			<xs:element name="value" minOccurs="0">
+			<xs:element name="value">
 				<xs:simpleType>
 					<xs:restriction base="xs:double">
 						<xs:minExclusive value="0" />
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
-			<xs:element name="date" type="xs:date" minOccurs="0"/>
-		</xs:sequence>
-	</xs:complexType>
-	<xs:complexType name="customer">
-		<xs:sequence>
-			<xs:element name="name" type="strValue" />
-			<xs:element name="lastName" type="strValue" />
-			<xs:element name="location" type="strValue" />
-			<xs:element name="account" type="accountC" minOccurs="1" />
-		</xs:sequence>
-	</xs:complexType>
-	<xs:complexType name="enterprise">
-		<xs:sequence>
-			<xs:element name="name" type="strValue" />
-			<xs:element name="location" type="strValue" />
-			<xs:element name="account" type="account" />
+			<xs:element name="dest" type="strValue"/>
+			<xs:element name="date" type="xs:date"  />
+			<xs:element name="accountOwner" type="xs:integer"/>
 		</xs:sequence>
 	</xs:complexType>
 </xs:schema>
