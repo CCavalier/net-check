@@ -37,10 +37,10 @@ public class OrderParser extends XmlParser {
 			root = doc.createElement("order");
 			doc.appendChild(root);
 		}
-//		Schema todo
-//		root.setAttribute("xmlns","http://www.ccavalier.fr");
-//		root.setAttribute("xsi:schemaLocation", "http://www.ccavalier.fr payment.xsd");
-//		root.setAttribute("xmlns:xsi","http://www.w3.org/2001/XMLSchema-instance");
+	
+		root.setAttribute("xmlns","http://www.ccavalier.fr");
+		root.setAttribute("xsi:schemaLocation", "http://www.ccavalier.fr commande.xsd");
+		root.setAttribute("xmlns:xsi","http://www.w3.org/2001/XMLSchema-instance");
 
 		Node enterpriseNode = doc.createElement("entreprise");
 		enterpriseNode.setTextContent(order.getEntreprise().getName());

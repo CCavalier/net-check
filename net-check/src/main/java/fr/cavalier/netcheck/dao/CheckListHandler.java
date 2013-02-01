@@ -9,7 +9,7 @@ import fr.cavalier.netcheck.model.Check;
 import fr.cavalier.netcheck.model.Customer;
 
 /**
- * @author malika 
+ * @author M Sitruk 
  * @date 27 janv. 2013
  * net-check
  * fr.cavalier.netcheck.dao CheckListHandler.java 

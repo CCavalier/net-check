@@ -9,10 +9,11 @@ import fr.cavalier.netcheck.model.Customer;
 import fr.cavalier.netcheck.util.CheckIdGenerator;
 
 /**
- * @author malika 
+ * @author M Sitruk
  * @date 27 janv. 2013
  * net-check
  * fr.cavalier.netcheck.dao ManagerParserContext.java 
+ * <p>Gere les differentes variables à manipuler dans le handler Account Ask</p>
  */
 public class AccountAskContext {
 	
@@ -75,6 +76,10 @@ public class AccountAskContext {
 		setCurrentCustomer(null);
 	}
 	
+	/**
+	 * 
+	 * @param account
+	 */
 	public void addAccount(Account account) {
 		if (getCurrentCustomer() == null) {
 			throw new RuntimeException("Account configuration is not valid beacause it's not liked to a Customer");

@@ -5,7 +5,7 @@ import fr.cavalier.netcheck.model.Manager;
 
 /**
  * <p>Parser pour la transformation des demandes de comptes en comptes clients</p>
- * @author malika 
+ * @author C Cavalier 
  * @date 26 janv. 2013
  * net-check
  * fr.cavalier.netcheck.dao ManagerParser.java 

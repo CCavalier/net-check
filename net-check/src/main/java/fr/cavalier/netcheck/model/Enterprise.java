@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @author malika 
+ * @author M Sitruk
  * @date 27 janv. 2013
  * net-check
  * fr.cavalier.netcheck.model Enterprise.java 

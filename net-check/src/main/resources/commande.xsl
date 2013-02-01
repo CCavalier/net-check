@@ -25,6 +25,7 @@
 		</table>
 	</xsl:template>
 	<xsl:template match="//ns:checks">
+	<br/>
 		<table border="1">
 			<tr bgcolor="#9acd32">
 				<th COLSPAN="5">Vos cheques de paiement</th>

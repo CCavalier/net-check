@@ -14,6 +14,13 @@ import fr.cavalier.netcheck.model.Enterprise;
 import fr.cavalier.netcheck.model.Order;
 import fr.cavalier.netcheck.util.DateFormatter;
 
+/**
+ * <p>Genere les commandes</p>
+ * @author C Cavalier 
+ * @date 1 févr. 2013
+ * net-check
+ * fr.cavalier.netcheck.dao OrderHandler.java
+ */
 public class OrderHandler extends DefaultHandler {
 	
 	private Enterprise orderEntreprise;

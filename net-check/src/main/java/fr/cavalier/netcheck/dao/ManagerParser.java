@@ -16,7 +16,7 @@ import fr.cavalier.netcheck.model.Manager;
 import fr.cavalier.netcheck.util.DateFormatter;
 
 /**
- * @author malika
+ * @author C Cavalier
  * @date 27 janv. 2013 net-check fr.cavalier.netcheck.dao ManagerParser.java
  */
 public class ManagerParser extends XmlParser {

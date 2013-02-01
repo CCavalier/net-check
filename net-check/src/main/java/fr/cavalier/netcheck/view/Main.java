@@ -26,6 +26,14 @@ import fr.cavalier.netcheck.model.Order;
 import javax.xml.xpath.*;
 import javax.xml.parsers.*;
 */
+
+/**
+ * 
+ * @author C Cavalier 
+ * @date 1 févr. 2013
+ * net-check
+ * fr.cavalier.netcheck.view Main.java
+ */
 public class Main {
 	
 	private static Map<String, Integer> stockForEnterprise1;
@@ -45,7 +53,6 @@ public class Main {
 	public static void initializeManagers() throws ParserConfigurationException {
 		
 		ManagerParser managerParser = new ManagerParser();
-		
 		Manager manager0 = new Manager();
 		manager0.setIdentifiant(0L);
 		
@@ -125,7 +132,7 @@ public class Main {
 	public static void accountOwnerReceiveAskedCheckAndReply() throws ParserConfigurationException {
 		// Manager 0 recoit ses demandes
 		ManagerParser parser = new ManagerParser();
-		
+		parser.setXslSheet("manager");
 		Manager aManager0 = parser.retrieveManagerFromInput("manager0");
 		
 		AccountAskParser askp= new AccountAskParser(aManager0);
@@ -160,6 +167,7 @@ public class Main {
 			chkp.saveDocumentToFile("chequier."+customer.getName()+"-"+customer.getLastname());
 		}
 		parser.recordManager(aManager1);
+		parser.setXslSheet("manager");
 		parser.saveDocumentToFile("manager1");
 	}
 	
@@ -198,6 +206,7 @@ public class Main {
 		client1.paiement("EUR", 40, order1);
 		client1.paiement("EUR", 149.5, order1);
 		orderParser.createOrder(order1);
+		orderParser.setXslSheet("commande");
 		orderParser.saveDocumentToFile("commande0");
 		
 		Order order2 = new Order();

@@ -7,7 +7,7 @@ import fr.cavalier.netcheck.model.Check;
 import fr.cavalier.netcheck.model.Customer;
 
 /**
- * @author malika 
+ * @author M Sitruk 
  * @date 27 janv. 2013
  * net-check
  * fr.cavalier.netcheck.dao CheckListParser.java 
@@ -22,6 +22,10 @@ public class CheckListParser extends XmlParser {
 		gestionnaire = new CheckListHandler(customer);
 	}
 	
+	/**
+	 * <p>Cree le document check list 
+	 * @param customer
+	 */
 	public void recordCheckListForUser(Customer customer) {
 		
 		Element client=doc.createElement("customer");

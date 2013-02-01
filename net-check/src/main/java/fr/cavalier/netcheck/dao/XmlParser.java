@@ -13,6 +13,7 @@ import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
 
 import org.w3c.dom.Document;
 import org.xml.sax.SAXParseException;
@@ -23,10 +24,15 @@ import org.xml.sax.helpers.DefaultHandler;
  * Acces XML generique et gestion des exceptions
  * </p>
  * 
- * @author malika
+ * @author ccavalier
  * @date 26 janv. 2013 net-check fr.cavalier.netcheck.dao XmlParser.java
  */
 public class XmlParser {
+	private String xslSheet;
+
+	public void setXslSheet(String s) {
+		xslSheet = s;
+	}
 
 	public String getDtdFile() {
 		return dtdFile;
@@ -75,12 +81,13 @@ public class XmlParser {
 		}
 		doc = document;
 	}
-	
+
 	/**
 	 * <p>
 	 * Methode en charge de l'ouverture et extraction du fichier xml
 	 * </p>
-	 * @throws ParserConfigurationException 
+	 * 
+	 * @throws ParserConfigurationException
 	 */
 	public void initializeDocument() throws ParserConfigurationException {
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -105,10 +112,25 @@ public class XmlParser {
 			if (dtdFile != null)
 				transformer.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM,
 						dtdFile);
+
 			FileOutputStream oFile = new FileOutputStream("src/main/resources/"
 					+ output + ".xml");
 			StreamResult result = new StreamResult(oFile);
 			transformer.transform(source, result);
+			
+			// pour définir une feuille de style
+
+			if (xslSheet != null && !xslSheet.equals("")) {
+				TransformerFactory xsFactory = TransformerFactory.newInstance();
+				Transformer xsTransformer = xsFactory
+						.newTransformer(new StreamSource("src/main/resources/"+xslSheet + ".xsl"));
+
+				xsTransformer.transform(new StreamSource("src/main/resources/"
+						+ output + ".xml"),
+						new StreamResult("src/main/resources/"
+								+ output + ".html"));
+
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

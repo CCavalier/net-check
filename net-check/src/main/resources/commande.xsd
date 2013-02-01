@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.ccavalier.fr" xmlns="http://www.ccavalier.fr"
+	elementFormDefault="qualified">
+	<xs:element name="order">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="entreprise" type="xs:string" />
+				<xs:element name="items">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="item" type="xs:string" maxOccurs="unbounded" />
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="checks">
+				<xs:complexType>
+				<xs:sequence>
+				<xs:element name="check" type="check" maxOccurs="unbounded"/>
+				</xs:sequence>
+				</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="customer">
+		<xs:sequence>
+			<xs:element name="name" type="strValue" />
+			<xs:element name="lastname" type="strValue" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="devise">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[A-Z][A-Z][A-Z]" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="strValue">
+		<xs:restriction base="xs:string">
+			<xs:whiteSpace value="replace" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="check">
+		<xs:sequence>
+			<xs:element name="id">
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:minInclusive value="0" />
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="currency" type="devise" default="EUR" />
+			<xs:element name="value">
+				<xs:simpleType>
+					<xs:restriction base="xs:double">
+						<xs:minExclusive value="0" />
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="date" type="xs:date" />
+			<xs:element name="accountOwner" type="xs:integer" />
+			<xs:element name="customer" type="customer"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

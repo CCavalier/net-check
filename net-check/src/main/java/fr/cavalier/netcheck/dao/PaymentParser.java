@@ -11,7 +11,7 @@ import fr.cavalier.netcheck.model.Check;
 import fr.cavalier.netcheck.util.DateFormatter;
 
 /**
- * @author malika 
+ * @author M Sitruk 
  * @date 27 janv. 2013
  * net-check
  * fr.cavalier.netcheck.dao PaymentParser.java 
@@ -39,11 +39,17 @@ public class PaymentParser extends XmlParser {
 		root.setAttribute("xmlns:xsi","http://www.w3.org/2001/XMLSchema-instance");
 	}
 	
+	/**
+	 * <p>Ajoute un cheque au document</p>
+	 * @param cheque
+	 * @throws ParserConfigurationException
+	 */
 	public void addNewPaymentCheck(Check cheque) throws ParserConfigurationException {
 		initializeFile();
 		Node root = doc.getFirstChild();
 		
 		chequeParser = new CheckParser(cheque);
+		chequeParser.setXslSheet("chequePrinter");
 		chequeParser.initializeDocument();
 		chequeParser.checkGenerator();
 		chequeParser.saveDocumentToFile(cheque.getUser().getName()+cheque.getId().toString()+"cheque");

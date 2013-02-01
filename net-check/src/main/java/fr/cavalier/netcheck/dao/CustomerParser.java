@@ -11,7 +11,7 @@ import fr.cavalier.netcheck.model.Customer;
 
 /**
  * <p>Classe de traitement xml pour le client</p>
- * @author malika 
+ * @author C Cavalier 
  * @date 26 janv. 2013
  * net-check
  * fr.cavalier.netcheck.dao CustomerParser.java 

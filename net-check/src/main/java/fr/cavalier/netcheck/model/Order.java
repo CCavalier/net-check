@@ -3,6 +3,13 @@ package fr.cavalier.netcheck.model;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 
+ * @author C Cavalier 
+ * @date 1 févr. 2013
+ * net-check
+ * fr.cavalier.netcheck.model Order.java
+ */
 public class Order {
 	
 	private Enterprise entreprise;

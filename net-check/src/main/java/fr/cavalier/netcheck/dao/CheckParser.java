@@ -7,7 +7,7 @@ import fr.cavalier.netcheck.model.Check;
 import fr.cavalier.netcheck.util.DateFormatter;
 
 /**
- * @author malika 
+ * @author M Sitruk 
  * @date 28 janv. 2013
  * net-check
  * fr.cavalier.netcheck.dao CheckParser.java 
@@ -21,6 +21,9 @@ public class CheckParser extends XmlParser {
 		super.gestionnaire = null;
 	}
 	
+	/**
+	 * <p>Genere un cheque</p>
+	 */
 	public void checkGenerator() {
 		Element root = doc.createElement("commandCheck");
 	

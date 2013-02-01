@@ -5,7 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * @author malika 
+ * @author C Cavalier 
  * @date 27 janv. 2013
  * net-check
  * fr.cavalier.netcheck.util DateFormatter.java 
